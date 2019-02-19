@@ -128,9 +128,9 @@ class Root extends React.Component {
 
       options: Object.assign({}, params.options, {
         [OPTIONS.POPULATE_TYPE]: Utils.getPropertyValue(params.options, OPTIONS.POPULATE_TYPE, null),
-        [OPTIONS.RANDOMIZE_DATA]: Utils.getPropertyValue(params.options, OPTIONS.RANDOMIZE_DATA, true),
-        [OPTIONS.TRIM_TEXT]: Utils.getPropertyValue(params.options, OPTIONS.TRIM_TEXT, true),
-        [OPTIONS.INSERT_ELLIPSIS]: Utils.getPropertyValue(params.options, OPTIONS.INSERT_ELLIPSIS, true),
+        [OPTIONS.RANDOMIZE_DATA]: Utils.getPropertyValue(params.options, OPTIONS.RANDOMIZE_DATA, false),
+        [OPTIONS.TRIM_TEXT]: Utils.getPropertyValue(params.options, OPTIONS.TRIM_TEXT, false),
+        [OPTIONS.INSERT_ELLIPSIS]: Utils.getPropertyValue(params.options, OPTIONS.INSERT_ELLIPSIS, false),
         [OPTIONS.DEFAULT_SUBSTITUTE]: Utils.getPropertyValue(params.options, OPTIONS.DEFAULT_SUBSTITUTE, ''),
         [OPTIONS.CREATE_GRID]: Utils.getPropertyValue(params.options, OPTIONS.CREATE_GRID, false),
         [OPTIONS.ROWS_COUNT]: Utils.getPropertyValue(params.options, OPTIONS.ROWS_COUNT, 2),
@@ -576,13 +576,13 @@ class Root extends React.Component {
               <TextField readOnly={this.state.viewOnly} name={OPTIONS.DATA_PATH} placeholder={Strings(STRINGS.DATA_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.DATA_PATH] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANG_KEY)} description={Strings(STRINGS.LANG_KEY_HELP_TEXT)} />
-              <TextField readOnly={this.state.viewOnly} name={OPTIONS.LANG_KEY} placeholder={Strings(STRINGS.LANG_KEY_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_KEY] || ''} handleChange={this.handleTextFieldChange} />
+              <TextField disabled={this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANG_KEY} placeholder={Strings(STRINGS.LANG_KEY_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_KEY] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANG_PATH)} description={Strings(STRINGS.LANG_PATH_HELP_TEXT)} />
               <TextField readOnly={this.state.viewOnly} name={OPTIONS.LANG_PATH} placeholder={Strings(STRINGS.LANG_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_PATH] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANGUAGE_KEYS)} description={Strings(STRINGS.LANGUAGE_KEYS_HELP_TEXT)} />
-              <TextField readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGE_KEYS} placeholder={Strings(STRINGS.LANGUAGE_KEYS_PLACEHOLDER)} value={this.state.options[OPTIONS.LANGUAGE_KEYS] || ''} handleChange={this.handleTextFieldChange} />
+              <TextField disabled={!this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGE_KEYS} placeholder={Strings(STRINGS.LANGUAGE_KEYS_PLACEHOLDER)} value={this.state.options[OPTIONS.LANGUAGE_KEYS] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.DATA_OPTIONS)} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.NAMESPACE_LANG} label={Strings(STRINGS.NAMESPACE_LANG)} checked={this.state.options[OPTIONS.NAMESPACE_LANG]} handleChange={this.handleCheckboxChange} />

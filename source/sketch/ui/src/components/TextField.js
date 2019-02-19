@@ -43,7 +43,7 @@ class TextField extends React.Component {
   render () {
     return (
       <div className='text-field' style={this.props.style}>
-        <input autoFocus={this.props.autoFocus} style={{ width: this.props.width ? this.props.width : '100%', height: this.props.height ? this.props.height : 24, lineHeight: this.props.height ? (this.props.height - 8) + 'px' : '16px' }} readOnly={this.props.readOnly} type='text' placeholder={this.props.placeholder} value={(!this.props.readOnly) ? this.state.value : this.props.value} onChange={this.handleChange} />
+        <input disabled={this.props.disabled} autoFocus={this.props.autoFocus} style={{ width: this.props.width ? this.props.width : '100%', height: this.props.height ? this.props.height : 24, lineHeight: this.props.height ? (this.props.height - 8) + 'px' : '16px' }} readOnly={this.props.readOnly} type='text' placeholder={this.props.placeholder} value={(!this.props.readOnly) ? this.state.value : this.props.value} onChange={this.handleChange} />
       </div>
     )
   }
