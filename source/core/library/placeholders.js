@@ -6,6 +6,7 @@
 
 import getValue from 'lodash/get'
 import * as Filters from './filters'
+import {getLanguageJSON} from '../../sketch/library/languages'
 
 /**
  * Extracts placeholders from a string. Placeholders are identified by {}.
@@ -315,6 +316,7 @@ export function parsePlaceholder (placeholderString) {
  * @returns {String}
  */
 export function populatePlaceholder (placeholder, data, defaultSubstitute, xd) {
+  const lang = getLanguageJSON(data.sketchOptions)
 
   // prepare populated string/array
   let populated
@@ -334,7 +336,9 @@ export function populatePlaceholder (placeholder, data, defaultSubstitute, xd) {
 
     // populate with data for keypath
     populated = getValue(data, placeholder.keypath)
-
+    try {
+      populated = populated || getValue(lang, placeholder.keypath)
+    } catch (e) {}
     // check if substitute is needed
     if (!populated) {
       hasValueForKey = false
@@ -354,6 +358,9 @@ export function populatePlaceholder (placeholder, data, defaultSubstitute, xd) {
           let substituteStack = placeholder.substitute.substring(1).split('?')
           for (let i = 0; i < substituteStack.length; ++i) {
             populated = getValue(data, substituteStack[i])
+            try {
+              populated = populated || getValue(lang, substituteStack[i])
+            } catch (e) {}
             if (populated) break
           }
 

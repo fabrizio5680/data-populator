@@ -17,7 +17,7 @@
     "material-colors": "1.2.5",
     "moment": "2.19.3",
     "node-gyp": "3.6.2",
-    "node-sass": "4.7.2",
+    "node-sass": "^4.7.2",
     "nprogress": "0.2.0",
     "pretty-date": "0.2.0",
     "prop-types": "15.6.0",

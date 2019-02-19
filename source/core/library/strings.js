@@ -59,6 +59,20 @@ export const POPULATE_AGAIN_DESCRIPTION = 'populateAgainDescription'
 
 // Populate
 export const DATA_PATH = 'dataPath'
+export const LANG_KEY = 'langKey'
+export const LANG_KEY_PLACEHOLDER = 'langKeyPlaceholder'
+export const LANG_PATH = 'langPath'
+export const LANGUAGES_FILL = 'languagesFill'
+export const LANG_KEY_HELP_TEXT = 'langKeyHelpText'
+export const LANG_PATH_HELP_TEXT = 'langPathHelpText'
+export const LANG_PATH_PLACEHOLDER = 'langPathPlaceholder'
+export const NAMESPACE_LANG = 'nameSpaceLang'
+export const NAMESPACE_LANG_HELP_TEXT = 'nameSpaceLangHelpText'
+export const LANGUAGE_KEYS = 'languageKeys';
+export const LANGUAGE_KEYS_HELP_TEXT = 'languageKeysHelpText'
+export const LANGUAGE_USE_ALL = 'languageUseAll';
+export const LANGUAGE_USE_ALL_HELP_TEXT = 'languageUseAllHelpText'
+export const LANGUAGE_KEYS_PLACEHOLDER = 'languageKeysPlaceholder'
 export const DATA_PATH_PLACEHOLDER = 'dataPathPlaceholder'
 export const DATA_PATH_HELP_TEXT = 'dataPathHelpText'
 export const DATA_OPTIONS = 'dataOptions'
@@ -170,6 +184,22 @@ export const strings = {
 
     // Populate
     [DATA_PATH]: 'Data Path',
+    [LANG_KEY]: 'Language Key (en, fr...)',
+    [LANG_KEY_PLACEHOLDER]: 'en',
+    [LANGUAGES_FILL]: 'Fill with multi languages',
+    [LANG_PATH]: 'Language Path (root path of languages) ',
+    [LANG_PATH_PLACEHOLDER]: '/Users/<username>/langs/',
+    [LANG_PATH_HELP_TEXT]: 'optional (root path of language files), default root folder of json loaded',
+    [LANG_KEY_HELP_TEXT]: 'language key to map to files, default "en"',
+    [NAMESPACE_LANG]: 'Namespace languages within objects ',
+    [NAMESPACE_LANG_HELP_TEXT]: '',
+    [NAMESPACE_LANG]: 'Namespace languages within objects ',
+    [NAMESPACE_LANG_HELP_TEXT]: '',
+    [LANGUAGE_KEYS]: 'List of all languages',
+    [LANGUAGE_KEYS_HELP_TEXT]: 'List maps engine languages',
+    [LANGUAGE_KEYS_PLACEHOLDER]: 'ar, bg, br, ca, ch, cs, da, de, el, en, en-us, es, es-ar, et, fi, fl, fo, fr, hr, hu, id, is, it, ja, ko, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh, zh-hk, zh-tw',
+    [LANGUAGE_USE_ALL]: 'Use all languages',
+    [LANGUAGE_USE_ALL_HELP_TEXT]: 'List maps engine languages',
     [DATA_PATH_PLACEHOLDER]: 'Root Level',
     [DATA_PATH_HELP_TEXT]: 'The JSON key used as the starting point for populating. The key with the most objects is automatically detected.',
     [DATA_OPTIONS]: 'Data Options',

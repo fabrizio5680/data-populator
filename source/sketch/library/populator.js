@@ -3,8 +3,7 @@
  *
  * Provides functionality to populate layers.
  */
-
-import { log } from '../../core'
+import * as OPTIONS from '../../sketch/library/options'
 import * as Core from '../../core'
 import Context from './context'
 import * as Utils from './utils'
@@ -12,6 +11,7 @@ import * as Data from './data'
 import * as Layers from './layers'
 import * as Actions from './actions'
 import * as SwapSymbolAction from './actions/swapSymbol'
+import {getNextLanguageKey} from '../library/languages'
 
 /**
  * Populate types:
@@ -47,6 +47,9 @@ export function populateLayers (layers, data, opt) {
     let layer = layers[i]
 
     let dataRow = Core.populator.selectDataRow(data, usedRows, opt.randomizeData)
+    dataRow.sketchOptions = Object.assign({}, opt, {
+      langKey: opt[OPTIONS.LANGUAGES_FILL] ? getNextLanguageKey(opt, usedRows.length) : opt[OPTIONS.LANG_KEY]
+    });
 
     // populate layer
     populateLayer(layer, dataRow, {

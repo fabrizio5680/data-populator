@@ -9,6 +9,7 @@
   "scripts": {},
   "license": "MIT",
   "dependencies": {
+    "@skpm/timers": "git+https://github.com/skpm/timers.git",
     "base-64": "^0.1.0",
     "utf8": "^3.0.0"
   },

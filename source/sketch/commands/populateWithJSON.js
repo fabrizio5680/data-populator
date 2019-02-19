@@ -12,6 +12,7 @@ import * as Populator from '../library/populator'
 import Options, * as OPTIONS from '../library/options'
 import Strings, * as STRINGS from '../../core/library/strings'
 import * as Utils from '../library/utils'
+import {preFetchAllLanguages} from '../library/languages';
 
 export default async (context, populateAgain) => {
   Context(context)
@@ -24,6 +25,7 @@ export default async (context, populateAgain) => {
 
   // get options and data
   let options = Options()
+  preFetchAllLanguages(options);
   options[OPTIONS.POPULATE_TYPE] = OPTIONS.POPULATE_TYPE_JSON
   let data = null
   if (populateAgain) {
@@ -56,6 +58,7 @@ export default async (context, populateAgain) => {
     options = response.options
     data = response.data
 
+
     // create grid
     if (options[OPTIONS.CREATE_GRID]) {
       selectedLayers = Layers.createGrid(selectedLayers, {
@@ -79,6 +82,7 @@ export default async (context, populateAgain) => {
 
   // store data used to populate the layers
   Utils.documentMetadata(context.document, 'lastUsedData', Utils.encode(data))
+
 
   // populate selected layers
   Populator.populateLayers(selectedLayers, data, options)

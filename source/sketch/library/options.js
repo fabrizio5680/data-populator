@@ -6,6 +6,7 @@
 
 import * as Utils from './utils'
 
+export const ROOT_DIR = 'rootDir'
 // data options
 export const RANDOMIZE_DATA = 'randomizeData'
 export const TRIM_TEXT = 'trimText'
@@ -31,12 +32,17 @@ export const URL = 'URL'
 export const HEADERS = 'headers'
 export const HEADERS_VISIBLE = 'headersVisible'
 export const DATA_PATH = 'dataPath'
+export const LANG_KEY = 'langKey'
+export const LANG_PATH = 'langPath'
+export const NAMESPACE_LANG = 'namespaceLang';
+export const LANGUAGE_KEYS = 'languageKeys'
+export const LANGUAGES_FILL = 'languagesFill'
 
 let OPTIONS = [
   RANDOMIZE_DATA, TRIM_TEXT, INSERT_ELLIPSIS, DEFAULT_SUBSTITUTE,
   CREATE_GRID, ROWS_COUNT, ROWS_MARGIN, COLUMNS_COUNT, COLUMNS_MARGIN,
-  POPULATE_TYPE, SELECTED_PRESET,
-  JSON_PATH,
+  POPULATE_TYPE, SELECTED_PRESET, LANG_PATH, LANG_KEY,
+  JSON_PATH, NAMESPACE_LANG, LANGUAGE_KEYS, LANGUAGES_FILL,
   URL, HEADERS, HEADERS_VISIBLE,
   PRESETS_LIBRARY_PATH, DATA_PATH
 ]
