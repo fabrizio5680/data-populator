@@ -46,9 +46,9 @@ class Root extends React.Component {
       // configurable options for the populator
       options: {
         [OPTIONS.POPULATE_TYPE]: null,
-        [OPTIONS.RANDOMIZE_DATA]: true,
-        [OPTIONS.TRIM_TEXT]: true,
-        [OPTIONS.INSERT_ELLIPSIS]: true,
+        [OPTIONS.RANDOMIZE_DATA]: false,
+        [OPTIONS.TRIM_TEXT]: false,
+        [OPTIONS.INSERT_ELLIPSIS]: false,
         [OPTIONS.DEFAULT_SUBSTITUTE]: '',
         [OPTIONS.CREATE_GRID]: false,
         [OPTIONS.ROWS_COUNT]: 2,
@@ -60,7 +60,7 @@ class Root extends React.Component {
         [OPTIONS.URL]: '',
         [OPTIONS.JSON_PATH]: '',
         [OPTIONS.SELECTED_PRESET]: null,
-        [OPTIONS.LANGUAGE_KEYS]: 'ar, bg, br, ca, ch, cs, da, de, el, en, es, et, fi, fl, fo, fr, hr, hu, id, is, it, ja, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh'
+        [OPTIONS.LANGUAGE_KEYS]: 'ar, bg, br, ca, ch, cs, da, de, el, en, es, et, fi, fl, fo, fr, hr, hu, id, is, it, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh'
       }
     }
 
