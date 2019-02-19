@@ -60,6 +60,7 @@ class Root extends React.Component {
         [OPTIONS.URL]: '',
         [OPTIONS.JSON_PATH]: '',
         [OPTIONS.SELECTED_PRESET]: null,
+        [OPTIONS.LANG_KEY]: 'en',
         [OPTIONS.LANGUAGE_KEYS]: 'ar, bg, br, ca, ch, cs, da, de, el, en, es, et, fi, fl, fo, fr, hr, hu, id, is, it, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh'
       }
     }
@@ -142,7 +143,7 @@ class Root extends React.Component {
         [OPTIONS.URL]: Utils.getPropertyValue(params.options, OPTIONS.URL, ''),
         [OPTIONS.JSON_PATH]: Utils.getPropertyValue(params.options, OPTIONS.JSON_PATH, ''),
         [OPTIONS.LANG_PATH]: Utils.getPropertyValue(params.options, OPTIONS.LANG_PATH, this.state.options[OPTIONS.LANG_PATH]),
-        [OPTIONS.LANG_KEY]: Utils.getPropertyValue(params.options, OPTIONS.LANG_KEY, (this.state.options[OPTIONS.LANG_KEY] || '').toLowerCase()),
+        [OPTIONS.LANG_KEY]: Utils.getPropertyValue(params.options, OPTIONS.LANG_KEY, (this.state.options[OPTIONS.LANG_KEY]).toLowerCase()),
         [OPTIONS.NAMESPACE_LANG]: Utils.getPropertyValue(params.options, OPTIONS.NAMESPACE_LANG, this.state.options[OPTIONS.NAMESPACE_LANG]),
         [OPTIONS.LANGUAGE_KEYS]: Utils.getPropertyValue(params.options, OPTIONS.LANGUAGE_KEYS, this.state.options[OPTIONS.LANGUAGE_KEYS]),
         [OPTIONS.LANGUAGES_FILL]: Utils.getPropertyValue(params.options, OPTIONS.LANGUAGES_FILL, false),
@@ -191,7 +192,7 @@ class Root extends React.Component {
       })
       $(document).trigger('setTextFieldValue', {
         name: OPTIONS.LANG_KEY,
-        value: (this.state.options[OPTIONS.LANG_KEY] || '').toLowerCase()
+        value: (this.state.options[OPTIONS.LANG_KEY]).toLowerCase()
       })
       $(document).trigger('setTextFieldValue', {
         name: OPTIONS.ROWS_COUNT,
@@ -576,17 +577,17 @@ class Root extends React.Component {
               <TextField readOnly={this.state.viewOnly} name={OPTIONS.DATA_PATH} placeholder={Strings(STRINGS.DATA_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.DATA_PATH] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANG_KEY)} description={Strings(STRINGS.LANG_KEY_HELP_TEXT)} />
-              <TextField disabled={this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANG_KEY} placeholder={Strings(STRINGS.LANG_KEY_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_KEY] || ''} handleChange={this.handleTextFieldChange} />
+              <TextField disabled={this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANG_KEY} placeholder={Strings(STRINGS.LANG_KEY_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_KEY]} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANG_PATH)} description={Strings(STRINGS.LANG_PATH_HELP_TEXT)} />
               <TextField readOnly={this.state.viewOnly} name={OPTIONS.LANG_PATH} placeholder={Strings(STRINGS.LANG_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_PATH] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANGUAGE_KEYS)} description={Strings(STRINGS.LANGUAGE_KEYS_HELP_TEXT)} />
+              <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGES_FILL} label={Strings(STRINGS.LANGUAGES_FILL)} checked={this.state.options[OPTIONS.LANGUAGES_FILL]} handleChange={this.handleCheckboxChange} />
               <TextField disabled={!this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGE_KEYS} placeholder={Strings(STRINGS.LANGUAGE_KEYS_PLACEHOLDER)} value={this.state.options[OPTIONS.LANGUAGE_KEYS] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.DATA_OPTIONS)} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.NAMESPACE_LANG} label={Strings(STRINGS.NAMESPACE_LANG)} checked={this.state.options[OPTIONS.NAMESPACE_LANG]} handleChange={this.handleCheckboxChange} />
-              <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGES_FILL} label={Strings(STRINGS.LANGUAGES_FILL)} checked={this.state.options[OPTIONS.LANGUAGES_FILL]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.RANDOMIZE_DATA} label={Strings(STRINGS.RANDOMIZE_DATA_ORDER)} checked={this.state.options[OPTIONS.RANDOMIZE_DATA]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.TRIM_TEXT} label={Strings(STRINGS.TRIM_TEXT)} checked={this.state.options[OPTIONS.TRIM_TEXT]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} marginBottom name={OPTIONS.INSERT_ELLIPSIS} label={Strings(STRINGS.INSERT_ELLIPSIS)} checked={this.state.options[OPTIONS.INSERT_ELLIPSIS]} handleChange={this.handleCheckboxChange} />
