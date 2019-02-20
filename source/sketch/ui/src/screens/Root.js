@@ -13,12 +13,14 @@ import * as Utils from '../library/utils'
 import Title from '../components/Title'
 import Select from '../components/Select'
 import FileBrowseField from '../components/FileBrowseField'
+import DirectoryBrowseField from '../components/DirectoryBrowseField'
 import URLGroup from '../components/URLGroup'
 import TextField from '../components/TextField'
 import Checkbox from '../components/Checkbox'
 import Button from '../components/Button'
 import LayoutOptionsTextFieldBlock from '../components/LayoutOptionsTextFieldBlock'
 import DataPreview from '../components/DataPreview'
+import {languages} from '../../../../sketch/library/languages'
 
 class Root extends React.Component {
   constructor (props) {
@@ -61,7 +63,7 @@ class Root extends React.Component {
         [OPTIONS.JSON_PATH]: '',
         [OPTIONS.SELECTED_PRESET]: null,
         [OPTIONS.LANG_KEY]: 'en',
-        [OPTIONS.LANGUAGE_KEYS]: 'ar, bg, br, ca, ch, cs, da, de, el, en, es, et, fi, fl, fo, fr, hr, hu, id, is, it, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh'
+        [OPTIONS.LANGUAGE_KEYS]: languages.join(',')
       }
     }
 
@@ -75,6 +77,7 @@ class Root extends React.Component {
     // json related handlers
     this.setData = this.setData.bind(this)
     this.setJSONPath = this.setJSONPath.bind(this)
+    this.setLanguagePath = this.setLanguagePath.bind(this)
 
     // url related handlers
     this.handleHeadersVisibilityChange = this.handleHeadersVisibilityChange.bind(this)
@@ -86,6 +89,8 @@ class Root extends React.Component {
     // global data related handlers
     this.handleTextFieldChange = this.handleTextFieldChange.bind(this)
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
+    this.handleLanguagePathBrowse = this.handleLanguagePathBrowse.bind(this)
+    this.handleLanguageSelectChange = this.handleLanguageSelectChange.bind(this);
     this.reloadData = this.reloadData.bind(this)
 
     // call to action
@@ -143,7 +148,7 @@ class Root extends React.Component {
         [OPTIONS.URL]: Utils.getPropertyValue(params.options, OPTIONS.URL, ''),
         [OPTIONS.JSON_PATH]: Utils.getPropertyValue(params.options, OPTIONS.JSON_PATH, ''),
         [OPTIONS.LANG_PATH]: Utils.getPropertyValue(params.options, OPTIONS.LANG_PATH, this.state.options[OPTIONS.LANG_PATH]),
-        [OPTIONS.LANG_KEY]: Utils.getPropertyValue(params.options, OPTIONS.LANG_KEY, (this.state.options[OPTIONS.LANG_KEY]).toLowerCase()),
+        [OPTIONS.LANG_KEY]: Utils.getPropertyValue(params.options, OPTIONS.LANG_KEY, 'en'),
         [OPTIONS.NAMESPACE_LANG]: Utils.getPropertyValue(params.options, OPTIONS.NAMESPACE_LANG, this.state.options[OPTIONS.NAMESPACE_LANG]),
         [OPTIONS.LANGUAGE_KEYS]: Utils.getPropertyValue(params.options, OPTIONS.LANGUAGE_KEYS, this.state.options[OPTIONS.LANGUAGE_KEYS]),
         [OPTIONS.LANGUAGES_FILL]: Utils.getPropertyValue(params.options, OPTIONS.LANGUAGES_FILL, false),
@@ -158,6 +163,9 @@ class Root extends React.Component {
         if (this.state.options[OPTIONS.POPULATE_TYPE] === OPTIONS.POPULATE_TYPE_JSON) {
           $(document).trigger('setJSONFilePath', {
             path: this.state.options[OPTIONS.JSON_PATH]
+          })
+          $(document).trigger('setDirectoryPath', {
+            path: this.state.options[OPTIONS.LANG_PATH]
           })
         }
       }
@@ -190,10 +198,7 @@ class Root extends React.Component {
         name: OPTIONS.LANG_PATH,
         value: this.state.options[OPTIONS.LANG_PATH]
       })
-      $(document).trigger('setTextFieldValue', {
-        name: OPTIONS.LANG_KEY,
-        value: (this.state.options[OPTIONS.LANG_KEY]).toLowerCase()
-      })
+
       $(document).trigger('setTextFieldValue', {
         name: OPTIONS.ROWS_COUNT,
         value: this.state.options[OPTIONS.ROWS_COUNT]
@@ -237,6 +242,15 @@ class Root extends React.Component {
       // call internal plugin handler to read file from disk
       Utils.callPlugin('readFile', {
         path: selectedPreset.path
+      })
+    })
+  }
+
+  handleLanguageSelectChange (selectedLanguage) {
+
+    this.setState({
+      options: Object.assign({}, this.state.options, {
+        [OPTIONS.LANG_KEY]: selectedLanguage
       })
     })
   }
@@ -342,6 +356,21 @@ class Root extends React.Component {
     })
   }
 
+  setLanguagePath (path) {
+    if (!path) return
+
+    this.setState({
+      options: Object.assign({}, this.state.options, {
+        [OPTIONS.LANG_PATH]: path
+      })
+    }, () => {
+
+      $(document).trigger('setDirectoryPath', {
+        path
+      })
+    })
+  }
+
   handleHeadersVisibilityChange (headersVisible) {
     this.setState({
       options: Object.assign({}, this.state.options, {
@@ -414,6 +443,17 @@ class Root extends React.Component {
     })
   }
 
+  handleLanguagePathBrowse () {
+    this.setState({
+      fileDialogOpen: true
+    })
+
+    // ask for JSON file
+    Utils.callPlugin('selectDirectory', {
+      path: this.state.options[OPTIONS.LANG_PATH]
+    })
+  }
+
   handleCheckboxChange (key, checked) {
     this.setState({
       options: Object.assign({}, this.state.options, {
@@ -452,6 +492,10 @@ class Root extends React.Component {
 
       $(document).trigger('setJSONFilePath', {
         path: this.state.options[OPTIONS.JSON_PATH]
+      })
+
+      $(document).trigger('setDirectoryPath', {
+        path: this.state.options[OPTIONS.LANG_PATH]
       })
 
     } else if (this.state.options[OPTIONS.POPULATE_TYPE] === OPTIONS.POPULATE_TYPE_URL) {
@@ -577,17 +621,16 @@ class Root extends React.Component {
               <TextField readOnly={this.state.viewOnly} name={OPTIONS.DATA_PATH} placeholder={Strings(STRINGS.DATA_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.DATA_PATH] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.LANG_KEY)} description={Strings(STRINGS.LANG_KEY_HELP_TEXT)} />
-              <TextField disabled={this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANG_KEY} placeholder={Strings(STRINGS.LANG_KEY_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_KEY]} handleChange={this.handleTextFieldChange} />
+              <Select disabled={this.state.options[OPTIONS.LANGUAGES_FILL]} data={languages} selected={this.state.options[OPTIONS.LANG_KEY] || languages.filter(l => l === 'en')[0]} handleChange={this.handleLanguageSelectChange} disabled={this.state.options[OPTIONS.LANGUAGES_FILL]}/>
 
               <Title subTitle title={Strings(STRINGS.LANG_PATH)} description={Strings(STRINGS.LANG_PATH_HELP_TEXT)} />
-              <TextField readOnly={this.state.viewOnly} name={OPTIONS.LANG_PATH} placeholder={Strings(STRINGS.LANG_PATH_PLACEHOLDER)} value={this.state.options[OPTIONS.LANG_PATH] || ''} handleChange={this.handleTextFieldChange} />
+              <DirectoryBrowseField readOnly={this.state.viewOnly}  onClick={this.handleLanguagePathBrowse} />
 
               <Title subTitle title={Strings(STRINGS.LANGUAGE_KEYS)} description={Strings(STRINGS.LANGUAGE_KEYS_HELP_TEXT)} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGES_FILL} label={Strings(STRINGS.LANGUAGES_FILL)} checked={this.state.options[OPTIONS.LANGUAGES_FILL]} handleChange={this.handleCheckboxChange} />
               <TextField disabled={!this.state.options[OPTIONS.LANGUAGES_FILL]} readOnly={this.state.viewOnly} name={OPTIONS.LANGUAGE_KEYS} placeholder={Strings(STRINGS.LANGUAGE_KEYS_PLACEHOLDER)} value={this.state.options[OPTIONS.LANGUAGE_KEYS] || ''} handleChange={this.handleTextFieldChange} />
 
               <Title subTitle title={Strings(STRINGS.DATA_OPTIONS)} />
-              <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.NAMESPACE_LANG} label={Strings(STRINGS.NAMESPACE_LANG)} checked={this.state.options[OPTIONS.NAMESPACE_LANG]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.RANDOMIZE_DATA} label={Strings(STRINGS.RANDOMIZE_DATA_ORDER)} checked={this.state.options[OPTIONS.RANDOMIZE_DATA]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} name={OPTIONS.TRIM_TEXT} label={Strings(STRINGS.TRIM_TEXT)} checked={this.state.options[OPTIONS.TRIM_TEXT]} handleChange={this.handleCheckboxChange} />
               <Checkbox readOnly={this.state.viewOnly} marginBottom name={OPTIONS.INSERT_ELLIPSIS} label={Strings(STRINGS.INSERT_ELLIPSIS)} checked={this.state.options[OPTIONS.INSERT_ELLIPSIS]} handleChange={this.handleCheckboxChange} />

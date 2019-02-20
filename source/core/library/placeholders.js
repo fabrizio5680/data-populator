@@ -335,10 +335,8 @@ export function populatePlaceholder (placeholder, data, defaultSubstitute, xd) {
   else {
 
     // populate with data for keypath
-    populated = getValue(data, placeholder.keypath)
-    try {
-      populated = populated || getValue(lang, placeholder.keypath)
-    } catch (e) {}
+    populated = getValue(data, placeholder.keypath) || getValue(lang, placeholder.keypath)
+
     // check if substitute is needed
     if (!populated) {
       hasValueForKey = false
@@ -357,10 +355,7 @@ export function populatePlaceholder (placeholder, data, defaultSubstitute, xd) {
           // the first substitute key that returns data is used
           let substituteStack = placeholder.substitute.substring(1).split('?')
           for (let i = 0; i < substituteStack.length; ++i) {
-            populated = getValue(data, substituteStack[i])
-            try {
-              populated = populated || getValue(lang, substituteStack[i])
-            } catch (e) {}
+            populated = getValue(data, substituteStack[i]) || getValue(lang, substituteStack[i])
             if (populated) break
           }
 

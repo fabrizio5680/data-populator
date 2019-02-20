@@ -40,6 +40,11 @@
 
     color: #525252;
 
+
+    &.disabled {
+      color: #c5c5c5;
+    }
+
     &:focus {
       border: 1px solid #14A6C7;
     }

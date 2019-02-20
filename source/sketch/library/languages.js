@@ -5,6 +5,8 @@ import {setTimeout} from '@skpm/timers';
 
 const languageFileCache = {};
 
+export const languages = 'ar, bg, br, ca, ch, cs, da, de, el, en, es, et, fi, fl, fo, fr, hr, hu, id, is, it, lt, lv, mk, ms, mx, nl, no, pl, pt, ro, ru, sr, sv, th, tl, tr, uk, vi, zh'.split(',');
+
 const getFile = ({langPath, langKey = '', rootDir}) => {
 
   const key = langKey.toLowerCase().trim();
@@ -38,9 +40,9 @@ const getLanguagesArray = (options) => {
 }
 
 export const getNextLanguageKey = (options, dataIndex) => {
-  const languages = getLanguagesArray(options)
-  const m = Math.floor(dataIndex / languages.length)
-  return dataIndex < languages.length ? languages[dataIndex] : languages[dataIndex - (languages.length * m)]
+  const languagesArray = getLanguagesArray(options)
+  const m = Math.floor(dataIndex / languagesArray.length)
+  return dataIndex < languagesArray.length ? languagesArray[dataIndex] : languagesArray[dataIndex - (languagesArray.length * m)]
 }
 
 export const preFetchAllLanguages = (options) => {
@@ -56,6 +58,7 @@ export const preFetchAllLanguages = (options) => {
 
 export const getLanguageJSON = (options) => {
   if (!options[OPTIONS.LANG_KEY]) {
+    Context().document.showMessage(`no language key specified, please select language`);
     return null;
   }
 

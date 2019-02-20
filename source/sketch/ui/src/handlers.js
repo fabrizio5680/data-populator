@@ -18,6 +18,10 @@ export function setJSONPath (callPlugin, data, rootRef) {
   rootRef.setJSONPath(data.path)
 }
 
+export function setLanguagePath (callPlugin, data, rootRef) {
+  rootRef.setLanguagePath(data.path)
+}
+
 export function loadURLData (callPlugin, data, rootRef, callId) {
 
   // create an object from all headers

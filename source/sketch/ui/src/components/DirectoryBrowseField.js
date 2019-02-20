@@ -1,35 +1,34 @@
 import React from 'react'
-import './FileBrowseField.scss'
+import './DirectoryBrowseField.scss'
 import Strings, * as STRINGS from '../../../../core/library/strings'
 import ReactDOM from 'react-dom'
 import $ from 'jquery'
 
 import Button from '../components/Button'
 
-class FileBrowseField extends React.Component {
+class DirectoryBrowseField extends React.Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      filePath: ''
+      dirPath: ''
     }
 
     this.setPath = this.setPath.bind(this)
     this.handleBrowseButtonClick = this.handleBrowseButtonClick.bind(this)
-    this.handleFileChange = this.handleFileChange.bind(this)
   }
 
   componentWillMount () {
-    $(document).on('setJSONFilePath', this.setPath)
+    $(document).on('setDirectoryPath', this.setPath)
   }
 
   componentWillUnmount () {
-    $(document).off('setJSONFilePath', this.setPath)
+    $(document).off('setDirectoryPath', this.setPath)
   }
 
   setPath (e, data) {
     this.setState({
-      filePath: data.path,
+      dirPath: data.path,
     })
   }
 
@@ -37,20 +36,10 @@ class FileBrowseField extends React.Component {
     this.props.onClick()
   }
 
-  handleFileChange (e) {
-    let file = e.target.files[0]
-    if (!file) return
-    this.setState({
-      file
-    })
-
-    this.props.handleChange(file)
-  }
-
   render () {
     return (
-      <div className='file-browse-field'>
-        <input style={{ width: (!this.props.readOnly) ? 201 : '100%' }} readOnly type='text' value={(this.state.filePath) ? this.state.filePath : ''} />
+      <div className='directory-browse-field'>
+        <input style={{ width: (!this.props.readOnly) ? 201 : '100%' }} readOnly type='text' value={(this.state.dirPath) ? this.state.dirPath : ''} />
         {/* <input ref='fileInput' type='file' onChange={this.handleFileChange} accept={this.props.accept} /> */}
         {!this.props.readOnly ? (
           <Button text={Strings(STRINGS.BROWSE)} style={{ width: 72, marginLeft: 12 }} handleClick={this.handleBrowseButtonClick} />
@@ -60,4 +49,4 @@ class FileBrowseField extends React.Component {
   }
 }
 
-export default FileBrowseField
+export default DirectoryBrowseField

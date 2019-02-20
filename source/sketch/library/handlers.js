@@ -26,3 +26,14 @@ export function selectJSON (callUI, data) {
     path
   })
 }
+
+export function selectDirectory (callUI, data) {
+
+  let path = Data.askForDirectory('Browse', 'Select Language Files Directory', data.path)
+  if (!path) return
+  path = String(path)
+
+  callUI('setLanguagePath', {
+    path
+  })
+}
